@@ -1,0 +1,5 @@
+name: Sandwich
+type: module
+description: Pluggable Sandwich module
+core: 8.x
+package: Custom

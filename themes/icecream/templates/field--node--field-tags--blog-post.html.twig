@@ -1,0 +1,36 @@
+{#
+ /**
+  * @file
+  * Theme override for a field, specific to the tags field on blog posts.
+ #}
+  {%
+  set classes = [
+  'field',
+  'field--name-' ~ field_name|clean_class,
+  'field--type-' ~ field_type|clean_class,
+  'field--label-' ~ label_display,
+  ]
+  %}
+  {%
+  set title_classes = [
+  'field__label',
+  label_display == 'visually_hidden' ? 'visually-hidden',
+  ]
+  %}
+
+<div{{ attributes.addClass(classes) }}>
+  {% if not label_hidden %}
+    <h3{{ title_attributes.addClass(title_classes) }}>{{ label }}</h3>
+  {% endif %}
+  <ul class='blog-post__tags field__items'>
+    {% for item in items %}
+      {% if loop.first %}
+        <li{{ item.attributes.addClass(['blog-post__tag', 'first']) }}>{{ item.content }}</li>
+      {% elseif loop.last %}
+        <li{{ item.attributes.addClass(['blog-post__tag', 'last']) }}>{{ item.content }}</li>
+      {% else %}
+        <li{{ item.attributes.addClass('blog-post__tag') }}>{{ item.content }}</li>
+      {% endif %}
+
+    {% endfor %}
+  </ul>

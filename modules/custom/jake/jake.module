@@ -1,0 +1,77 @@
+<?php
+
+/**
+ * @file
+ * Contains jake.module.
+ */
+
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function jake_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the jake module.
+    case 'help.page.jake':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('My Awesome Module') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function jake_theme() {
+  return [
+    'jake' => [
+      'render element' => 'children',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_entity_view().
+ */
+function jake_entity_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
+  // Only do the extra work if the component is configured to be displayed.
+  // This assumes a 'mymodule_addition' extra field has been defined for the
+  // entity bundle in hook_entity_extra_field_info().
+  if ($entity->getEntityType()->id() === 'node') {
+    $build['awesome'] = [
+      '#markup' => '<marquee>This is awesome!</marquee>>',
+      '#allowed_tags' => ['marquee'],
+    ];
+  }
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function jake_node_view (array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  // Count the number of times the current node has been viewed this session.
+  $session = \Drupal::request()->getSession();
+  $current_counts = $session->get('jake.view_counts', array());
+  if (!isset($current_counts[$entity->id()])) {
+    $current_counts[$entity->id()] = 1;
+  }
+  else {
+    $current_counts[$entity->id()]++;
+  }
+  $session->set('hooks_example.view_counts', $current_counts);
+
+  $module_handler = \Drupal::moduleHandler();
+  $module_handler->invokeAll('jake_count_incremented', array($current_counts[$entity->id()], $entity));
+  $build['view_count'] = array(
+    '#markup' => '<p>' . t('You have viewed this node @total times this session.', array('@total' => $current_counts[$entity->id()])) . '</p>',
+    '#cache' => array(
+      'max-age' => 0,
+    ),
+  );
+}
