@@ -1,4 +1,0 @@
-services:
-  plugin.manager.standup_plugin:
-    class: Drupal\standup\Plugin\StandupPluginManager
-    parent: default_plugin_manager
