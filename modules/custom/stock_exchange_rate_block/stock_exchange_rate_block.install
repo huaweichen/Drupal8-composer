@@ -1,0 +1,68 @@
+<?php
+
+use Drupal\block\Entity\Block;
+use Drupal\block_content\Entity\BlockContent;
+
+function stock_exchange_rate_block_install() {
+  $companies = [
+    [
+      'company_name' => 'Apple',
+      'symbol' => 'AAPL',
+    ],
+    [
+      'company_name' => 'Bank of America',
+      'symbol' => 'BAC',
+    ],
+    [
+      'company_name' => 'Transocean',
+      'symbol' => 'RIG',
+    ],
+    [
+      'company_name' => 'Freeport',
+      'symbol' => 'FCX',
+    ],
+  ];
+
+  // Loop companies and create block instances.
+  foreach ($companies as $company) {
+
+    $blockId = 'stock_exchange_rate_block' . strtolower(str_replace(' ', '_',$company['company_name']));
+
+    // Help: http://osseed.com/blog/drupal-8-how-add-custom-block-module-install.
+    if (!Block::load($blockId)) {
+      // Create block content for each block instance.
+      $blockContent = BlockContent::create([
+        // Type is bundle name.
+        'type' => 'stock_exchange_rate_card',
+        // Info is label.
+        'info' => $company['company_name'],
+      ]);
+      // Set fields.
+      $blockContent->set('field_company_name', $company['company_name']);
+      $blockContent->set('field_symbol', $company['symbol']);
+      $blockContent->save();
+
+      // Create block for block content.
+      $block = Block::create([
+        'id' => $blockId,
+        'plugin' => 'block_content:' . $blockContent->uuid(),
+        'region' => 'sidebar_first',
+        'provider' => 'block_content',
+        'weight' => -100,
+        'theme' => \Drupal::config('system.theme')->get('default'),
+        'visibility' => [
+          'request_path' => [
+            'id' => 'request_path',
+            'pages' => '<front>',
+          ]
+        ],
+        'status' => 'enabled',
+        'settings' => [
+          'label' => 'Stock Exchange Rate: ' . $company['company_name'],
+          'label_display' => 'invisible',
+        ],
+      ]);
+      $block->save();
+    }
+  }
+}

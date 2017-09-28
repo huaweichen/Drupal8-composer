@@ -1,0 +1,7 @@
+name: Stock exchange rate block
+type: module
+core: 8.x
+package: D8 Cards
+description: Stock exchange rate block
+dependencies:
+  - block
