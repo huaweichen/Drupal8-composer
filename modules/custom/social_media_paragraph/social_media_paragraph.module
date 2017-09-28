@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function social_media_paragraph_theme_suggestions_paragraph_alter(array &$suggestions, array $variables) {
+  // This function adds a theme suggestion.
+  $suggestions[] = 'paragraph__d8c_social_media__article';
+}
+
+/**
+ * Implements hook_theme().
+ */
+function social_media_paragraph_theme($existing, $type, $theme, $path) {
+  // This function hook added theme suggestion with a template. IN MODULE
+  // But in theme, just add the template.
+  return [
+    'paragraph__d8c_social_media__article' => [
+      'template' => 'paragraph--d8c-social-media--article',
+      'base hook' => 'paragraph',
+    ],
+  ];
+}

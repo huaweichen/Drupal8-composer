@@ -1,0 +1,7 @@
+name: Social Media Paragraph
+type: module
+description: Social Media Paragraph
+package: D8 Cards
+core: 8.x
+dependencies:
+  - paragraphs
