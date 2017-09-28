@@ -1,0 +1,5 @@
+name: 'Configuration Form'
+type: module
+description: 'D8Cards day 03: Configuration Form'
+package: 'D8 Cards'
+core: 8.x

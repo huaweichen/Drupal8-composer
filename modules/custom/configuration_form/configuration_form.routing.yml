@@ -1,0 +1,7 @@
+configuration_form.config_form:
+  path: '/configuration_form/config_form'
+  defaults:
+    _form: '\Drupal\configuration_form\Form\ConfigurationForm'
+    _title: 'D8Cards Day03 - Configuration form'
+  requirements:
+    _permission: 'access content'
