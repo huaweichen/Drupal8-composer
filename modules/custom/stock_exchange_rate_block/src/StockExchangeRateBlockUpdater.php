@@ -4,6 +4,7 @@ namespace Drupal\stock_exchange_rate_block;
 
 use Drupal\Component\Serialization\Exception\InvalidDataTypeException;
 use Drupal\Core\Config\ConfigManagerInterface;
+use Drupal\Core\Database\InvalidQueryException;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Component\Serialization\Json;
@@ -73,56 +74,65 @@ class StockExchangeRateBlockUpdater {
     $config = $this->configManager
       ->getConfigFactory()
       ->get('stock_exchange_rate_block.settings');
-    $companies = $config->get('companies');
     $api = $config->get('api');
     $bundle = $config->get('bundle');
     $callbackFnName = $config->get('callback');
 
-    // Get block.
-    $blocks = $this->entityTypeManager
-      ->getStorage('block_content')
-      ->loadByProperties([
-        'type' => $bundle,
-      ]);
+    try {
+      // Get block.
+      $blocks = $this->entityTypeManager
+        ->getStorage('block_content')
+        ->loadByProperties([
+          'type' => $bundle,
+        ]);
+    }
+    catch (InvalidQueryException $e) {
+      \Drupal::logger('stock_exchange_rate_block')->notice($e->getMessage());
+    }
 
-    // Loop blocks and retrieve data from API.
-    foreach ($blocks as $block) {
-      $symbol = $block->field_symbol->value;
-      $endpoint = $api . $symbol;
+    if (!empty($blocks)) {
+      // Loop blocks and retrieve data from API.
+      foreach ($blocks as $block) {
+        $symbol = $block->field_symbol->value;
+        $endpoint = $api . $symbol;
 
-      try {
-        $response = (string) $this->httpClient
-          ->get($endpoint, [
-            'headers' => [
-              'Accept' => 'text',
-            ],
-          ])
-          ->getBody();
+        try {
+          $response = (string) $this->httpClient
+            ->get($endpoint, [
+              'headers' => [
+                'Accept' => 'text',
+              ],
+            ])
+            ->getBody();
 
-        // Remove callback function name, and function brackets.
-        $jsonResponse = substr($response, strlen($callbackFnName) + 1, -1);
+          // Remove callback function name, and function brackets.
+          $jsonResponse = substr($response, strlen($callbackFnName) + 1, -1);
 
-        $responseArray = Json::decode($jsonResponse);
+          $responseArray = Json::decode($jsonResponse);
 
-        // Entity storage.
-        $change = $responseArray['Change'];
-        $lastPrice = $responseArray['LastPrice'];
+          // Entity storage.
+          $change = $responseArray['Change'];
+          $lastPrice = $responseArray['LastPrice'];
 
-        $block->set('field_change', $change)
-          ->set('field_lastPrice', $lastPrice)
-          ->save();
-      }
-      catch (HttpException $e) {
-        // Log HTTP exception.
-        continue;
-      }
-      catch (InvalidDataTypeException $e) {
-        // Invalid data.
-        continue;
-      }
-      catch (EntityStorageException $e) {
-        // Entity save exception.
-        continue;
+          $block->set('field_change', $change)
+            ->set('field_last_price', $lastPrice)
+            ->save();
+        }
+        catch (HttpException $e) {
+          \Drupal::logger('stock_exchange_rate_block')->notice('HttpException -> ' . $e->getMessage());
+          // Log HTTP exception.
+          continue;
+        }
+        catch (InvalidDataTypeException $e) {
+          \Drupal::logger('stock_exchange_rate_block')->notice('InvalidDataTypeException -> ' . $e->getMessage());
+          // Invalid data.
+          continue;
+        }
+        catch (EntityStorageException $e) {
+          \Drupal::logger('stock_exchange_rate_block')->notice('EntityStorageException -> ' . $e->getMessage());
+          // Entity save exception.
+          continue;
+        }
       }
     }
   }

@@ -10,8 +10,7 @@ function stock_exchange_rate_block_install() {
 
   // Loop companies and create block instances.
   foreach ($companies as $symbol => $company) {
-
-    $blockId = 'stock_exchange_rate_block' . strtolower(str_replace(' ', '_',$company));
+    $blockId = 'stock_exchange_rate_block' . strtolower(str_replace(' ', '_', $company));
 
     // Help: http://osseed.com/blog/drupal-8-how-add-custom-block-module-install.
     if (!Block::load($blockId)) {
@@ -50,4 +49,5 @@ function stock_exchange_rate_block_install() {
       $block->save();
     }
   }
+
 }
