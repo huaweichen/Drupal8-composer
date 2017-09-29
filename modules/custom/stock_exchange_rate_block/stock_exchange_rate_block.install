@@ -40,10 +40,10 @@ function stock_exchange_rate_block_install() {
             'pages' => '<front>',
           ]
         ],
-        'status' => 'enabled',
         'settings' => [
           'label' => 'Stock Exchange Rate: ' . $company,
           'label_display' => 'invisible',
+          'status' => 1,
         ],
       ]);
       $block->save();
