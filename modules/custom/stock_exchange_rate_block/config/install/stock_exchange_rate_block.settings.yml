@@ -1,0 +1,9 @@
+name: Stock exchange rate block
+bundle: stock_exchange_rate_block
+api: 'http://dev.markitondemand.com/MODApis/Api/v2/Quote/jsonp?callback=myFunction&symbol='
+callback: 'myFunction'
+companies:
+  AAPL: 'Apple'
+  BAC: 'Bank of America'
+  RIG: 'Transocean'
+  FCX: 'Freeport'

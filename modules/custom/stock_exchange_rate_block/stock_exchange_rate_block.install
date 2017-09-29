@@ -4,42 +4,27 @@ use Drupal\block\Entity\Block;
 use Drupal\block_content\Entity\BlockContent;
 
 function stock_exchange_rate_block_install() {
-  $companies = [
-    [
-      'company_name' => 'Apple',
-      'symbol' => 'AAPL',
-    ],
-    [
-      'company_name' => 'Bank of America',
-      'symbol' => 'BAC',
-    ],
-    [
-      'company_name' => 'Transocean',
-      'symbol' => 'RIG',
-    ],
-    [
-      'company_name' => 'Freeport',
-      'symbol' => 'FCX',
-    ],
-  ];
+  $config = \Drupal::config('stock_exchange_rate_block.settings');
+  $companies = $config->get('companies');
+  $bundleName = $config->get('bundle');
 
   // Loop companies and create block instances.
-  foreach ($companies as $company) {
+  foreach ($companies as $symbol => $company) {
 
-    $blockId = 'stock_exchange_rate_block' . strtolower(str_replace(' ', '_',$company['company_name']));
+    $blockId = 'stock_exchange_rate_block' . strtolower(str_replace(' ', '_',$company));
 
     // Help: http://osseed.com/blog/drupal-8-how-add-custom-block-module-install.
     if (!Block::load($blockId)) {
       // Create block content for each block instance.
       $blockContent = BlockContent::create([
         // Type is bundle name.
-        'type' => 'stock_exchange_rate_card',
+        'type' => $bundleName,
         // Info is label.
-        'info' => $company['company_name'],
+        'info' => $company,
       ]);
       // Set fields.
-      $blockContent->set('field_company_name', $company['company_name']);
-      $blockContent->set('field_symbol', $company['symbol']);
+      $blockContent->set('field_company_name', $company);
+      $blockContent->set('field_symbol', $symbol);
       $blockContent->save();
 
       // Create block for block content.
@@ -58,7 +43,7 @@ function stock_exchange_rate_block_install() {
         ],
         'status' => 'enabled',
         'settings' => [
-          'label' => 'Stock Exchange Rate: ' . $company['company_name'],
+          'label' => 'Stock Exchange Rate: ' . $company,
           'label_display' => 'invisible',
         ],
       ]);

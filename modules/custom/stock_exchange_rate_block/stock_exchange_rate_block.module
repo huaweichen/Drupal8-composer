@@ -1,2 +1,11 @@
 <?php
 
+use Drupal\block\Entity\Block;
+
+/**
+ * Implements hook_cron().
+ */
+function stock_exchange_rate_block_cron() {
+  // Update stock price.
+  \Drupal::service('stock_exchange_rate_block.updater')->update();
+}
