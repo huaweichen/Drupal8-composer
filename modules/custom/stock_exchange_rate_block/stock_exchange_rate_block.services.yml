@@ -1,4 +1,4 @@
 services:
   stock_exchange_rate_block.updater:
     class: Drupal\stock_exchange_rate_block\StockExchangeRateBlockUpdater
-    arguments: ['@config.manager', '@entity_type.manager', '@http_client']
+    arguments: ['@config.manager', '@entity_type.manager', '@http_client', '@serialization.json']
