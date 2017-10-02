@@ -1,0 +1,4 @@
+name: 'Cron Queuing Module'
+description: 'Cron Queuing Module'
+core: 8.x
+type: module

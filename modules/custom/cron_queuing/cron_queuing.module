@@ -1,0 +1,30 @@
+<?php
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Queue\QueueInterface;
+
+/**
+ * Implements hook_entity_insert().
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ */
+function cron_queuing_entity_insert(EntityInterface $entity) {
+
+  // If the entity is not a user.
+  if ($entity->getEntityType() !== 'user') {
+    return;
+  }
+
+  // Create a queue.
+  $queueFactory = \Drupal::service('queue');
+  /** @var \Drupal\Core\Queue\QueueInterface $queue */
+  $queue = $queueFactory->get('cron_user_email');
+
+  // Create an item for queue.
+  $item = new \stdClass();
+  $item->nid = $entity->id();
+
+  // Store item into the queue.
+  $queue->createItem($item);
+
+}
