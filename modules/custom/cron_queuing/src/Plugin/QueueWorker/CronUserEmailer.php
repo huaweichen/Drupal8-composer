@@ -77,7 +77,7 @@ class CronUserEmailer extends QueueWorkerBase implements ContainerFactoryPluginI
         'subject' => 'Welcome to D8 Cards testutorial.',
         'message' => 'Thanks for your registration. Your personal details gonna be sold in high price.',
       ],
-      NULL,
+      'drupal8@example.org',
       // Successfully sent or not.
       TRUE
     );
