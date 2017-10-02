@@ -27,4 +27,6 @@ function cron_queuing_entity_insert(EntityInterface $entity) {
   // Store item into the queue.
   $queue->createItem($item);
 
+  // Process item.
+  \Drupal::logger('cron_user_mailer')->notice('New user created.');
 }

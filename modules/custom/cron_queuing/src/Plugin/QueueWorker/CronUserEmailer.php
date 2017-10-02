@@ -56,6 +56,9 @@ class CronUserEmailer extends QueueWorkerBase implements ContainerFactoryPluginI
    * @inheritDoc
    */
   public function processItem($data) {
+    // Process item.
+    \Drupal::logger('cron_user_mailer')->notice('Send email to user');
+
     // Retrieve user ID.
     $user = $this->userStorage->load($data->nid);
 
@@ -74,6 +77,7 @@ class CronUserEmailer extends QueueWorkerBase implements ContainerFactoryPluginI
         'subject' => 'Welcome to D8 Cards testutorial.',
         'message' => 'Thanks for your registration. Your personal details gonna be sold in high price.',
       ],
+      NULL,
       // Successfully sent or not.
       TRUE
     );
