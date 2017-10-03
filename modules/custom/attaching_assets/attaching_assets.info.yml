@@ -1,0 +1,5 @@
+name: 'Attaching Assets'
+type: 'module'
+core: 8.x
+description: 'Attaching assets in D8'
+package: 'D8 Cards'

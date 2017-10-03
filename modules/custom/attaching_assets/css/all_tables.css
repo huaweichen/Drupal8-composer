@@ -1,0 +1,7 @@
+table {
+  background-color: #0d747c;
+}
+marquee {
+  -webkit-marquee: auto medium infinite scroll normal;
+  overflow-x: -webkit-marquee;
+}

@@ -1,0 +1,7 @@
+all_tables:
+  version: 1.x
+  css:
+    theme:
+      css/all_tables.css: {}
+  js:
+    js/all_tables.js: {}
