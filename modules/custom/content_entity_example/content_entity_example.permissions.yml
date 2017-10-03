@@ -1,0 +1,11 @@
+view contact entity:
+  title: 'View contact entity form'
+add contact entity:
+  title: 'Add contact entity form'
+edit contact entity:
+  title: 'Edit contact entity form'
+delete contact entity:
+  title: 'Delete contact entity form'
+administer contact entity:
+  title: 'Administer contact entity form'
+  restrict access: TRUE

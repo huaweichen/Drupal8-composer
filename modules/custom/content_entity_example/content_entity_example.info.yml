@@ -1,0 +1,9 @@
+name: 'Content Entity Example'
+type: 'module'
+description: 'Content entity example, provides a contact entity form.'
+package: D8 Cards
+core: 8.x
+dependencies:
+  - options
+  - entity_reference
+  - examples
