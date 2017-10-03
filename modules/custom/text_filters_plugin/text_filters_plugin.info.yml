@@ -1,0 +1,5 @@
+name: Text Filters Plugin
+type: module
+description: Text Filters Plugin
+package: D8 Cards
+core: 8.x

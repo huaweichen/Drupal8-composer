@@ -16,6 +16,8 @@ services:
   drupal:
     build:
       context: ./docker/drupal
+      args:
+        xdebug: 'true'
     ports:
       - 8080:80
     volumes:
