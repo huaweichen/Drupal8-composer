@@ -1,3 +1,10 @@
+# TL;DR
+
+#### This project is a practice of www.d8cards.com.
+
+##### For the purpose of getting Drupal 8 certification within 21 days.
+
+---
 
 CONTENTS OF THIS FILE
 ---------------------
