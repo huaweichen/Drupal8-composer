@@ -1,0 +1,6 @@
+name: 'Creating Custom Field Formatter'
+core: 8.x
+type: module
+description: 'Day 15: Creating a custom field formatter. Movie rating.'
+dependencies:
+  - image
