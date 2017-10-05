@@ -1,0 +1,18 @@
+<?php
+
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ */
+function logging_in_d8_node_update(EntityInterface $entity) {
+  \Drupal::logger('logging_in_d8')->notice('Node with title %nodeTitle of type @nodeType has been updated', [
+    // Use this style of placeholder when substituting the value of an href attribute. Values will be HTML escaped, and filtered for dangerous protocols.
+    '%nodeTitle' => strtoupper($entity->label()),
+    // Use this style of placeholder for most use-cases. Special characters in the text will be converted to HTML entities.
+    '@nodeType' => strtoupper($entity->getEntityType()->getLabel()),
+    // %variable — Use this style of placeholder to pass text through drupal_placeholder() which will result in HTML escaped text, then wrapped with <em> tags.
+  ]);
+}
