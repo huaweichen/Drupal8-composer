@@ -1,0 +1,10 @@
+name: 'Theming 101'
+description: 'Day 12: Theming 101'
+type: theme
+core: 8.x
+package: D8 Cards
+
+regions:
+  sidebar1: 'Side Bar Left'
+  content: 'Content'
+  sidebar2: 'Side Bar Right'

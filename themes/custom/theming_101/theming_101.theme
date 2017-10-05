@@ -1,0 +1,14 @@
+<?php
+//
+///**
+// * Implements hook_theme().
+// */
+//function theming_101_theme($existing, $type, $theme, $path) {
+//  return [
+//    'page' => [
+//      'template' => 'page',
+//      'base hook' => 'page',
+//      'path' => 'themes/custom/theming_101/templates/layout',
+//    ],
+//  ];
+//}
