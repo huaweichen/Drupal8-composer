@@ -4,6 +4,8 @@
 
 ##### For the purpose of getting Drupal 8 certification within 21 days.
 
+##### Don't buy www.drupalize.me's anything. They are shit. And it's been proved that their contents are not practical enough to deal with questions in the exam.
+
 ---
 
 CONTENTS OF THIS FILE
