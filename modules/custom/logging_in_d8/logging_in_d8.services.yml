@@ -1,0 +1,4 @@
+services:
+  logging_in_d8.logger.node_create:
+    class: Drupal\logging_in_d8\Logger\NodeCreateLogger
+    arguments: ['@logger.factory']

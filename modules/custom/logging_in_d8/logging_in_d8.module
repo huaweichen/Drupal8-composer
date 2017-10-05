@@ -15,4 +15,7 @@ function logging_in_d8_node_update(EntityInterface $entity) {
     '@nodeType' => strtoupper($entity->getEntityType()->getLabel()),
     // %variable — Use this style of placeholder to pass text through drupal_placeholder() which will result in HTML escaped text, then wrapped with <em> tags.
   ]);
+
+  // The purpose of this function is to use Dependency Injection. For Day 16.
+  \Drupal::service('logging_in_d8.logger.node_create')->log('notice', 'Logger from DI.');
 }
