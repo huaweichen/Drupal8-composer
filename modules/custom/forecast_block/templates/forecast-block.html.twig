@@ -1,0 +1,15 @@
+
+{% if context.response is empty %}
+  {{- context.noresponse -}}
+{% else %}
+  <div class="forecast-block">
+    <ul class="list--unstyled">
+      <li>{{ context.response.latitude }}</li>
+      <li>{{ context.response.longitude }}</li>
+      <li>{{ context.response.timezone }}</li>
+      <li>weather: {{ context.response.currently.icon }}</li>
+      <li>temperature: {{ context.response.currently.temperature }}</li>
+      <li>humidity: {{ context.response.currently.humidity }}</li>
+    </ul>
+  </div>
+{% endif %}

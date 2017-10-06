@@ -1,0 +1,5 @@
+services:
+  forecast_block.forecast:
+    class: Forecast\Forecast
+    arguments:
+      - '4db2f31340ce7cb7755983859d785bcb'

@@ -1,0 +1,5 @@
+name: 'Forecast block'
+description: 'Call forecast api and display in block.'
+core: 8.x
+type: module
+package: D8 Cards
