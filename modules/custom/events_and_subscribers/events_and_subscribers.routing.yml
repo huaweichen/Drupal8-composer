@@ -1,0 +1,6 @@
+events_and_subscribers.event_example:
+  path: '/event_example'
+  defaults:
+    _controller: 'Drupal\events_and_subscribers\Controller\EventExampleController::simpleDispatcher'
+  requirements:
+    _permission: 'access content'

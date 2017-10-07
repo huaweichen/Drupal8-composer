@@ -1,0 +1,4 @@
+services:
+  events_and_subscribers.simple_event:
+    class: Drupal\events_and_subscribers\Event\SimpleEvent
+    arguments: []
