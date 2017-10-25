@@ -1,0 +1,11 @@
+<div class="day-19">
+  {% if var1 is not empty %}
+    <span class="{{ classes|join(' ')|clean_class }}">
+    {{ var1 }}
+  </span>
+  {% endif %}
+  <p>Print value of $var[3]['g']: {{ var2.3.g }}</p>
+  <div class="{%- for i in 0..mycount %}{{ 'count-' ~ i }}{% endfor -%}">
+    <p>Hello would be translatable: {{ 'Hello'|t }}</p>
+  </div>
+</div>
